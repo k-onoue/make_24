@@ -71,7 +71,7 @@ def get_count(values: list):
 
 if __name__ == "__main__":
     operators = ['+', '-', '*', '/']
-    numbers = [1, 2, 3, 4]
+    numbers = [8, 7, 6, 5]
 
     print(f'operators: {operators}')
     print(f'numbers: {numbers}')
@@ -87,22 +87,21 @@ if __name__ == "__main__":
     print(f'tree_main: {tree_main}')
     print(f'tree_sub: {tree_sub}')
     print(f'tree_counter: {tree_counter}')
-    print()
 
 
     # 初期位置は空のリストで表現
+    print()
+    print()
+    print("tree_main")
     initial_location = []
-    add_node(tree_main, tree_sub.val[0][0], initial_location)
+    nums = deepcopy(tree_sub.val[0])
+    val = nums.pop(0) # おそらく pop はインデックスを参照して要素をリストから取り出しているはず
+    add_node(tree_main, val, initial_location)
     print(tree_main)
-
-
-    print('get_values')
-    print(get_values(tree_main, []))
-    print('get_values')
-    print(get_values(tree_main, [0]))
     
     print()
     print()
+    print("tree_counter")
     next_location = [0]
     values_tmp = get_values(tree_main, next_location)
     print(values_tmp)
@@ -112,5 +111,11 @@ if __name__ == "__main__":
     print(tree_counter)
 
     # tree_sub を更新
+    print()
+    print()
+    print("tree_sub")
+    add_node(tree_sub, nums, initial_location)
+    print(tree_sub)
 
-
+    # ルールにしたがって，深さ優先探索するように
+    
