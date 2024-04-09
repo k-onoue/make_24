@@ -17,42 +17,33 @@ class NonBinTree:
 # class TreeManager:
 #     def __init__(self, ):
 
-def add_node(tree, value, location_list):
+def add_node(tree, value, location, return_new_location=False):
     expr1 = tree.var_name
-    expr2 = ".".join([f"nodes[{idx}]" for idx in location_list])
+    expr2 = ".".join([f"nodes[{idx}]" for idx in location])
     expr3 = f"add_node({value})"
-
-    # expr_list = [expr for expr in [expr1, expr2, expr3] if expr]
     expr_list = [expr1, expr2, expr3] if expr2 else [expr1, expr3]
     expression = ".".join(expr_list)
-
-    print(expression)
-
     eval(expression)
+
+    if return_new_location:
+        expr_list = [expr1, expr2, "nodes"] if expr2 else [expr1, "nodes"]
+        expression = ".".join(expr_list)
+        breadth = eval(f"len({expression})") # ここで，breadth < 1 となると困る
+        new_location = deepcopy(location)
+        new_location.append(breadth - 1)
+        return new_location
 
 
 def get_value(tree, location: list):
     expr1 = tree.var_name
     expr2 = ".".join([f"nodes[{el}]" for el in location])
     expr3 = "val"
-
     expr_list = [expr1, expr2, expr3] if expr2 else [expr1, expr3]
     expression = ".".join(expr_list)
-
-    print(expression)
-
     return eval(expression)
 
 
 def get_values(tree, location: list):
-    # values = []
-
-    # for depth in range(len(location) + 1):
-    #     value = get_value(tree, location[:depth])
-    #     values.append(value)
-    
-    # return values
-
     return [get_value(tree, location[:depth]) for depth in range(len(location) + 1)]
 
 
@@ -64,53 +55,50 @@ def get_count(values: list):
 
 
 
-
-
-
-
-
 if __name__ == "__main__":
     operators = ['+', '-', '*', '/']
-    numbers = [1, 2, 3, 4]
+    numbers = [8, 7, 6, 5]
 
     print(f'operators: {operators}')
     print(f'numbers: {numbers}')
     print()
 
     nums = deepcopy(numbers)
-    ops = []
+    ops = ['id'] # 空のリストだと下に行けないため，仮の値を設定．恒等写像．
 
     tree_main = NonBinTree(nums.pop(0), var_name="tree_main")
-    tree_sub = NonBinTree((nums, ops), var_name="tree_sub")
+    tree_numbers = NonBinTree(nums, var_name="tree_numbers")
+    tree_operators = NonBinTree(ops, var_name="tree_operators")
     tree_counter = NonBinTree(1, var_name="tree_counter")
 
     print(f'tree_main: {tree_main}')
-    print(f'tree_sub: {tree_sub}')
+    print(f'tree_numbers: {tree_numbers}')
+    print(f'tree_operators: {tree_operators}')
     print(f'tree_counter: {tree_counter}')
-    print()
 
 
     # 初期位置は空のリストで表現
     initial_location = []
-    add_node(tree_main, tree_sub.val[0][0], initial_location)
-    print(tree_main)
-
-
-    print('get_values')
-    print(get_values(tree_main, []))
-    print('get_values')
-    print(get_values(tree_main, [0]))
-    
-    print()
-    print()
-    next_location = [0]
+    nums = deepcopy(tree_numbers.val)
+    val = nums.pop(0) 
+    next_location = add_node(tree_main, val, initial_location, return_new_location=True)
+    add_node(tree_numbers, nums, initial_location)
+    ops = deepcopy(operators)
+    add_node(tree_operators, operators, next_location)
     values_tmp = get_values(tree_main, next_location)
-    print(values_tmp)
-    print(get_count(values_tmp))
     count = get_count(values_tmp)
     add_node(tree_counter, count, initial_location)
-    print(tree_counter)
-
-    # tree_sub を更新
 
 
+    print()
+    print()
+    print()
+    print(f'tree_main: {tree_main}')
+    print(f'tree_numbers: {tree_numbers}')
+    print(f'tree_operators: {tree_operators}')
+    print(f'tree_counter: {tree_counter}')
+
+    
+
+    # ルールにしたがって，深さ優先探索するように
+    
