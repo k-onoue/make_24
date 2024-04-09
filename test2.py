@@ -62,14 +62,19 @@ def get_count(values: list):
     return counter_value
 
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
     operators = ['+', '-', '*', '/']
     numbers = [1, 2, 3, 4]
 
     print(f'operators: {operators}')
-    print()
     print(f'numbers: {numbers}')
-    print()
     print()
 
     nums = deepcopy(numbers)
@@ -80,25 +85,15 @@ if __name__ == "__main__":
     tree_counter = NonBinTree(1, var_name="tree_counter")
 
     print(f'tree_main: {tree_main}')
-    print()
     print(f'tree_sub: {tree_sub}')
-    print()
     print(f'tree_counter: {tree_counter}')
     print()
-    print()
 
-    current_location = []
-    add_node(tree_main, tree_sub.val[0][0], current_location)
+
+    # 初期位置は空のリストで表現
+    initial_location = []
+    add_node(tree_main, tree_sub.val[0][0], initial_location)
     print(tree_main)
-
-
-    cnt = 0
-
-    print(type(tree_main.val))
-    cnt += 1
-
-    print(type(tree_main.nodes[0].val))
-    cnt += 1
 
 
     print('get_values')
@@ -108,8 +103,14 @@ if __name__ == "__main__":
     
     print()
     print()
-    print()
-    # add_node(tree_counter, )
-    values_tmp = get_values(tree_main, [0])
+    next_location = [0]
+    values_tmp = get_values(tree_main, next_location)
     print(values_tmp)
     print(get_count(values_tmp))
+    count = get_count(values_tmp)
+    add_node(tree_counter, count, initial_location)
+    print(tree_counter)
+
+    # tree_sub を更新
+
+
