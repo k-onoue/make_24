@@ -52,6 +52,10 @@ def get_count(values: list):
     counter_value = len(values) - ops_length
     return counter_value
 
+def go_one_step_deeper()
+
+
+
 
 
 
@@ -109,7 +113,12 @@ if __name__ == "__main__":
         val = nums.pop(0) if nums else ops.pop(0)
         next_location = add_node(tree_main, val, location, return_new_location=True)
 
-        ops = deepcopy(ops)
+        if len(location) > len(previous_location):
+            ops = deepcopy(operators)
+        elif len(location) == len(previous_location):
+            ops = deepcopy(ops)
+        else: # len(location) < len(previous_location)
+            ops = deepcopy(operators[1:])
         add_node(tree_sub, (nums, ops), location)
         rl_values = get_root_to_leaf_values(tree_main, next_location)
         count = get_count(rl_values)
