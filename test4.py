@@ -20,18 +20,9 @@ class NonBinTree:
 def add_node(tree, value, location, return_new_location=False):
     expr1 = tree.var_name
     expr2 = ".".join([f"nodes[{idx}]" for idx in location])
-    expr3 = f"add_node({value})" if type()
+    expr3 = f"add_node({value})" if type(value) != str else f"add_node(r'{value}')"
     expr_list = [expr1, expr2, expr3] if expr2 else [expr1, expr3]
     expression = ".".join(expr_list)
-    print()
-    print()
-    print()
-    print()
-    print(expression)
-    print()
-    print()
-    print()
-    print()
     eval(expression)
 
     if return_new_location:
