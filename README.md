@@ -33,3 +33,61 @@
 - location のサイズが１つ増える
 
 入力 
+
+# グローバル変数を有効的に使うと関
+
+
+[24, 5, 6, 7, 8] {+, -, *, /}
+
+
+24, ([5, 6, 7, 8], []), 1
+24 -> 5, ()
+
+
+# やはり ツリーが ３つ要る
+tree_main の n 階層目のノード要素 イコール tree_sub の n-1 階層目のノード
+
+# 先幅優先でツリーの構築をすればよいかも
+
+# ツリーは一つでよい。代わりに属性をもたせる（カウンターと残りの値）
+
+
+```
+class SimpleStack:
+  maxsize = 100 #default stack size
+  def __init__(self):
+    self.top=0
+    self.body=[None] * self.maxsize # Make list of 'None' with maxsize
+
+  def push(self,val):
+    self.body[self.top]=val
+    self.top = self.top + 1 # increment stack pointer.
+    return self
+
+  def pop(self):
+    if self.top == 0:
+      return None # Stack is already empty
+    self.top = self.top -1 # decrement stack pointer.
+    return self.body[self.top]
+# class end
+
+# Let's test our 'SimpleStack'
+s = SimpleStack()
+for i in range(100):
+  s.push(i)
+
+print(s.pop(),s.pop(),s.pop(),s.pop(),s.pop(),s.pop())
+```
+
+return self
+
+# 特定の親を持つノード同士で互いに参照できると便利かもしれない
+
+
+
+
+
+
+
+
+
